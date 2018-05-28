@@ -61,8 +61,9 @@ El algortimo descrito es implementado en GPU mediante CUBLAS, el enfoque por blo
 
 Algo que es importante mencionar es que el desempeño de la GPU también depende de en donde se encuentren alojados los datos. Se asume que inicialmente los datos(la matriz) se encuentran en la CPU y son transferidos a la GPU. Además dado que el bando de ancha entre la CPU y GPU es de magnitud menor al de sólo GPU se propone inicializar las matrices invloucradas en la bidiagonalización en ls GPU. Una vez que se ha bidiagonalizado la matriz A esta es copiada a la CPU para proceder con la diagonalización y se mantienen la matrices <a href="http://www.codecogs.com/eqnedit.php?latex=Q" target="_blank"><img src="http://latex.codecogs.com/gif.latex?Q" title="Q" /></a> y <a href="http://www.codecogs.com/eqnedit.php?latex=P^T" target="_blank"><img src="http://latex.codecogs.com/gif.latex?P^T" title="P^T" /></a> en la GPU.
 
+Después de realizar la bidiagonalización se obtiene la matriz <a href="http://www.codecogs.com/eqnedit.php?latex=B" target="_blank"><img src="http://latex.codecogs.com/gif.latex?B" title="B" /></a>, la cual queremos ahora diagonalizar de tal forma que obtengamos <a href="http://www.codecogs.com/eqnedit.php?latex=\Sigma=X^TBY" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\Sigma=X^TBY" title="\Sigma=X^TBY" /></a> donde <a href="http://www.codecogs.com/eqnedit.php?latex=\Sigma" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\Sigma" title="\Sigma" /></a> es una matriz diagonal y X,Y^T son matrices ortogonales. 
 
-
+Como se mencionó al principio, se realizará la diagonalización con el algoritmo _iplicitly shifted QR_, para esto se definen  <a href="http://www.codecogs.com/eqnedit.php?latex=d(i)" target="_blank"><img src="http://latex.codecogs.com/gif.latex?d(i)" title="d(i)" /></a> y <a href="http://www.codecogs.com/eqnedit.php?latex=e(i)" target="_blank"><img src="http://latex.codecogs.com/gif.latex?e(i)" title="e(i)" /></a> como la i-ésima entrada de la diagonal y diagonal superior respectivamente, de tal manera que en cada iteración del algoritmo la diagonal superior vaya haciendose más pequeña.
 
 
 
