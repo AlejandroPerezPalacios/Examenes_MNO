@@ -55,6 +55,12 @@ donde,
 Las matrices <a href="http://www.codecogs.com/eqnedit.php?latex=P" target="_blank"><img src="http://latex.codecogs.com/gif.latex?P" title="P" /></a> y <a href="http://www.codecogs.com/eqnedit.php?latex=Q" target="_blank"><img src="http://latex.codecogs.com/gif.latex?Q" title="Q" /></a> de la bidiagonalización <a href="http://www.codecogs.com/eqnedit.php?latex=B=Q^TAP" target="_blank"><img src="http://latex.codecogs.com/gif.latex?B=Q^TAP" title="B=Q^TAP" /></a> son obtenidas de una forma similar. PAra obtener la matriz <a href="http://www.codecogs.com/eqnedit.php?latex=B" target="_blank"><img src="http://latex.codecogs.com/gif.latex?B" title="B" /></a> se utilizó bidiagonalización parcial debido a que es menos costoso y fue previamente implementado en GPU.
 
 
-Una vez descrita la bidiagonalización se menciona que las actualizaciones se pueden expresar utilizando operaciones de nivel 2 de BLAS, actualizando la matriz cada que ocurre una eliminación renglón-columna. Dado que el método es computacionalmente costoso se propone dividir la matriz en bloques y a cada bloque aplicar la bidiagonalización, si dividimos a la matriz en L bloques entonces la actualización completa de la matriz se dará cuando L columnas y renglones sean bidiagonalizados.
+Una vez descrita la bidiagonalización se menciona que las actualizaciones se pueden expresar utilizando operaciones de nivel 2 de BLAS, actualizando la matriz cada que ocurre una eliminación renglón-columna. Dado que el método es computacionalmente costoso se propone dividir la matriz en bloques y a cada bloque aplicar la bidiagonalización, si dividimos a la matriz en L bloques entonces la actualización completa de la matriz se dará cuando L columnas y renglones sean bidiagonalizados. Dado que cada bloque sufre una actualización se requieren cálculos extra de los vectores u,v,w y z. Dado que cada bloque tendrá sus vectores householder es necesario almacenar en memoria los cada uno en una matriz U,V,W y Z respectivamente ya que estos serán necesarios para la actualización de la matriz completa.
+
+El algortimo descrito es implementado en GPU mediante CUBLAS, el enfoque por bloques tiene un desempeño alto debido a que las funciones de multiplicación y normas que tiene CUBLAS para matriz-matriz y matriz-vector. Se menciona que CUBLAS se desempeña mejor para matrices cuyo tamaño es un múltiplo de 32 (debido a que se alineaba con la capacidad de memoria) y se aprovechó este hecho al agregar ceros a las matrices y vectores para que su longitud fuer aun múltiplo de 32.
+
+
+
+
 
 
