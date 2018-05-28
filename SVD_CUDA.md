@@ -59,6 +59,8 @@ Una vez descrita la bidiagonalización se menciona que las actualizaciones se pu
 
 El algortimo descrito es implementado en GPU mediante CUBLAS, el enfoque por bloques tiene un desempeño alto debido a que las funciones de multiplicación y normas que tiene CUBLAS para matriz-matriz y matriz-vector. Se menciona que CUBLAS se desempeña mejor para matrices cuyo tamaño es un múltiplo de 32 (debido a que se alineaba con la capacidad de memoria) y se aprovechó este hecho al agregar ceros a las matrices y vectores para que su longitud fuer aun múltiplo de 32.
 
+Algo que es importante mencionar es que el desempeño de la GPU también depende de en donde se encuentren alojados los datos. Se asume que inicialmente los datos(la matriz) se encuentran en la CPU y son transferidos a la GPU. Además dado que el bando de ancha entre la CPU y GPU es de magnitud menor al de sólo GPU se propone inicializar las matrices invloucradas en la bidiagonalización en ls GPU. Una vez que se ha bidiagonalizado la matriz A esta es copiada a la CPU para proceder con la diagonalización y se mantienen la matrices <a href="http://www.codecogs.com/eqnedit.php?latex=Q" target="_blank"><img src="http://latex.codecogs.com/gif.latex?Q" title="Q" /></a> y <a href="http://www.codecogs.com/eqnedit.php?latex=P^T" target="_blank"><img src="http://latex.codecogs.com/gif.latex?P^T" title="P^T" /></a> en la GPU.
+
 
 
 
