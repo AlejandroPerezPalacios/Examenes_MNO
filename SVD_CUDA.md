@@ -77,8 +77,12 @@ Una vez que se han obtenido las matrices Q,X y P^T, Y^T basta con realizar las m
 
 Para evaluar el desempeño del algoritmo se comparó contra las implementaciones en matlab y LAPACK, las cuales ya han sido optimizadas y son el mejor punto de comparación. Además se probó la implementación en GPU con diversos equipos y distintas capacidades de memoria además de tarjetas gráficas.
 
-Es interesante cómo los autores evaluaron el resultado, ya no sólo lo hicieron en distintos equipos sino que para cada equipo se realizó el cálculo de SVD generando matrices aleatorias y se corrió el algortimo 10 veces para cada matriz. Además se promediaron los tiempos de cómputo de las 10 matrices para tomar en cuenta que la muestra pueda ser muy buena o muy mala. 
+Es interesante cómo los autores evaluaron el resultado, ya no sólo lo hicieron en distintos equipos sino que para cada equipo se realizó el cálculo de SVD generando matrices aleatorias y se corrió el algortimo 10 veces para cada matriz. Además se promediaron los tiempos de cómputo de las 10 matrices para tomar en cuenta que la muestra pueda ser muy buena o muy mala.  En los resultdos mostrados es a partir de matrices de dimensión 512 que se nota la gran diferencia de la implementación en GPU, obtiendo un speed-up 0.61 sobre la implementación en INTEL MKL(el algoritmo óptimo en CPU) y con un speed-up de 7.8 con respecto al mismo algoritmo pero para una matriz de 4Kx4K. 
 
+El speed-up se realiza con respecto al algoritmo de MKL ya que este también involucra una bidiagonalización parcial de la matriz. Dicho lo anterior se comparó cada uno de los pasos para calcular la descomposición SVD, es decir se calculó el speed-up con respecto a MKL de la bidiagonalización, diagonalización y multiplicación final. Esto demostró que la parte del proceso con el mayor speed-up para matrices de dimensión grande fue en la bidiagonalización parcial y en algunos casos superado por la diagonalización ya que su crecimiento en speed-up tiende a aumentar gradualmente con el tamaño de las matrices.
 
+El mayor logro es el cálculo de SVD para matrices de gran tamaño (desde 14Kx14K), que son prácticamente imposibles de manejar en la CPU por el almacenamiento en memoria. Para estas matrices el cálculo de la SVD tómo un total de 76 minutos en la GPU con el algoritmo descrito (GPU NVIDIA Tesla S1070).
+
+Un resultado, bastante importante, es el hecho de generar un algoritmo híbrido para la descomposición ya que no depende únicamente de la GPU, reconociendo las limitaciones y más que nada aprovechando el poder de computo que tiene la CPU para operaciones más sencillas en secuencial.
 
 
