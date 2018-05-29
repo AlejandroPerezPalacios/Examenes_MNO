@@ -20,5 +20,12 @@ Una idea básica para entender los algoritmos de optimización para big data se 
   + **Aleatorización**: Las técnicas de aleatorización sobresalen en el ámbito de aproximación con respecto a otras técnicas ya que funcionan como un motor para los métodos de primer orden y además podemos controlar su comportamiento esperado.
   + **Cómputo distribuido y en paralelo**: Los métodos de primer orden son lo suficientemente flexibles para su implementación en paralelo o de manera distribuida.
   
-Los 3 pilares se complementan de tal manera que ofrecen beneficios de escalabilidad para la optimización en big data. Por ejemplo los métodos de primer orden aleatorizados presentan una aceleración en convergencia con respecto a su contraparte determinística; en particular, un ejemplo que relaciono con esto de la maestría es el descenso gradiente estocástico, ya que se desea minimizar una función pero por la cantidad de datos se van tomando muestras con las que se calcula el gradiente y se va convergiendo a la misma solución que el gradiente determinista pero de manera más rápida (para muchos datos).
+Los 3 pilares se complementan de tal manera que ofrecen beneficios de escalabilidad para la optimización en big data. Por ejemplo los métodos de primer orden aleatorizados presentan una aceleración en convergencia con respecto a su contraparte determinística; en particular, un ejemplo que relaciono con esto de la maestría es el descenso gradiente estocástico para redes neuronales, ya que se desea minimizar una función pero por la cantidad de datos se van tomando muestras con las que se calcula el gradiente y se va convergiendo a la misma solución que el gradiente determinista pero de manera más rápida (para muchos datos).
+
+Uno de los problemas habituales dentro de la optimización es el de regresión lineal, en el que deseamos hallar los coeficientes que mejor ajusten a nuestros datos, este ajuste se traduce en la minimimización del error cuadrático medio y recibe el nombre de mínimos cuadrados. Este problema es ampliamente usado en varios campos de la ciencia y en problemas prácticos y una de las maneras más claras de encontrar la solución es mediante descenso gradiente.
+
+Se muestra en el artículo que el algortimo de descenso gradiente estocástico presenta una convergencia rápida con menos cantidad de datos que su contraparte determinística.
+
+
+
 
