@@ -26,6 +26,53 @@ Uno de los problemas habituales dentro de la optimización es el de regresión l
 
 Se muestra en el artículo que el algortimo de descenso gradiente estocástico presenta una convergencia rápida con menos cantidad de datos que su contraparte determinística.
 
+En el artículo se comenta que utilizando un marco completo de gradiente proximal se pueden resolver problemas no suaves casi tan fácilmente como problemas suaves, cosa que a mediados de los 2000 no se entendía del todo.
+
+### Objetivo suave.
+
+Para este caso tomamos una función a optimizar _f_ convexa y diferenciable. La técnica elemental para encontrar el óptimo es descenso gradiente, en la que se toma el gradiente local <a href="http://www.codecogs.com/eqnedit.php?latex=\triangledown&space;f(x)" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\triangledown&space;f(x)" title="\triangledown f(x)" /></a> y se realiza la siguiente actualización:
+
+<a href="http://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;x^{k&plus;1}&space;&=&space;x^k-\alpha_k\triangledown&space;f(x^k)&space;\end{align*}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\begin{align*}&space;x^{k&plus;1}&space;&=&space;x^k-\alpha_k\triangledown&space;f(x^k)&space;\end{align*}" title="\begin{align*} x^{k+1} &= x^k-\alpha_k\triangledown f(x^k) \end{align*}" /></a>
+
+donde _k_ es la _k_-ésima iteración y <a href="http://www.codecogs.com/eqnedit.php?latex=\alpha_k" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\alpha_k" title="\alpha_k" /></a> es el tamaño de paso para asegurar la convergencia.
+
+Aún cuando puede haber algoritmos que tomen menos iteraciones que el descenso gradiente, su facilidad de computo comparado con otros algoritmos nos ayuda a disminuir el tiempo de convergencia. Además si realizamos algunos supuestos sobre _f_ podemos saber cuantas iteraciones necesitará el algoritmo para llegar a una solución acertada bajo un nivel de confianza <a href="http://www.codecogs.com/eqnedit.php?latex=\epsilon" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\epsilon" title="\epsilon" /></a>. La suposición es que la función es Lipschitz continua, es decir:
+
+<a href="http://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;\forall&space;x,y\in\mathbb{R}^p,||\triangledown&space;f(x)-\triangledown&space;f(y)||_2\leq&space;L||x-y||_2&space;\end{align*}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\begin{align*}&space;\forall&space;x,y\in\mathbb{R}^p,||\triangledown&space;f(x)-\triangledown&space;f(y)||_2\leq&space;L||x-y||_2&space;\end{align*}" title="\begin{align*} \forall x,y\in\mathbb{R}^p,||\triangledown f(x)-\triangledown f(y)||_2\leq L||x-y||_2 \end{align*}" /></a>
+
+Para una constante _L_. Si _f_ tiene segunda derivada podemos deducir que el método del gradiente tomara <a href="http://www.codecogs.com/eqnedit.php?latex=O(1/\epsilon)" target="_blank"><img src="http://latex.codecogs.com/gif.latex?O(1/\epsilon)" title="O(1/\epsilon)" /></a> iteraciones para una solución acertada a un nivel de precisión <a href="http://www.codecogs.com/eqnedit.php?latex=\epsilon" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\epsilon" title="\epsilon" /></a>. 
+
+Aunque se puede definir una cota superior para el número de iteraciones la precisión del algoritmos aún puede mejorarse, es lo que se menciona en el artículo mediante el método de gradiente de Nesterov al agregar un parámetro extra para el momento.
+
+  1) <a href="http://www.codecogs.com/eqnedit.php?latex=x^{k&plus;1}=v^k-\alpha_k\triangledown&space;f(v^k)" target="_blank"><img src="http://latex.codecogs.com/gif.latex?x^{k&plus;1}=v^k-\alpha_k\triangledown&space;f(v^k)" title="x^{k+1}=v^k-\alpha_k\triangledown f(v^k)" /></a>
+  2) <a href="http://www.codecogs.com/eqnedit.php?latex=v^{k&plus;1}=x^{k&plus;1}&plus;\beta_k(x^{k&plus;1}-x^k)" target="_blank"><img src="http://latex.codecogs.com/gif.latex?v^{k&plus;1}=x^{k&plus;1}&plus;\beta_k(x^{k&plus;1}-x^k)" title="v^{k+1}=x^{k+1}+\beta_k(x^{k+1}-x^k)" /></a>
+
+Este ayuda a que la k-ésima iteración se "mueva" en la mejor dirección posible y se mantenga en esa dirección.
+
+Entre las características que puede presentar una función que sean de utilidad para la optimización debemos poner especial atención a la convexidad fuerte. Diremos que una función _f_ es fuertemente convexa si <a href="http://www.codecogs.com/eqnedit.php?latex=x&space;\mapsto&space;f(x)&space;-\mu/2||x||_2^2" target="_blank"><img src="http://latex.codecogs.com/gif.latex?x&space;\mapsto&space;f(x)&space;-\mu/2||x||_2^2" title="x \mapsto f(x) -\mu/2||x||_2^2" /></a> es convexa para algún valor <a href="http://www.codecogs.com/eqnedit.php?latex=\mu>0" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\mu>0" title="\mu>0" /></a>. Cualquier problema convexo puede transformarse en un problema fuertemente convexo al añadir el término de regularización.
+
+Cada una de las propiedades añadidas al método de descenso gradiente que se derivó de los supuestos ayuda a una convergencia más rápida y certera, cómo se muestra en el artículo podemos actualizar el tamaño de paso en cada iteración o definir el mejor tamaño de paso y mostrar que la convergencia es mejor, siempre y cuando la función _f_ cumpla los supuestos(Lipschitz continua, con segunda derivada o con gradiente Lipschitz.
+
+### Composición de objetivos.
+
+Para este caso consideramos un problema de optimización formado por _f_ suave y _g_ no suave convexa. En general un problema de este estilo hace que la eficiencia de los métodos de primer orden se vea reducida. Es por esto que se utilizan los métodos de gradiente-proximal ya que aprovecha la estructura mixta de este tipo de funciones, además podemos notar a este método como una extensión natural al descenso gradiente cuando lo vemos como un problema de optimización:
+
+<a href="http://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;x^{k&plus;1}&space;&=&space;\underset{y\in\mathbb{R}^p}{argmin}\left&space;\{&space;f(x^k)&plus;\triangledown&space;f(x^k)^T(y-x^k)&plus;\frac{1}{2\alpha_k}||y-x^k||^2\right&space;\}&space;\end{align*}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\begin{align*}&space;x^{k&plus;1}&space;&=&space;\underset{y\in\mathbb{R}^p}{argmin}\left&space;\{&space;f(x^k)&plus;\triangledown&space;f(x^k)^T(y-x^k)&plus;\frac{1}{2\alpha_k}||y-x^k||^2\right&space;\}&space;\end{align*}" title="\begin{align*} x^{k+1} &= \underset{y\in\mathbb{R}^p}{argmin}\left \{ f(x^k)+\triangledown f(x^k)^T(y-x^k)+\frac{1}{2\alpha_k}||y-x^k||^2\right \} \end{align*}" /></a>
+
+El gradiente-proximal utiliza la misa aproximación de _f_ pero agrega el término _g_ no suave de manera explícita:
+
+<a href="http://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;x^{k&plus;1}&space;&=&space;\underset{y\in\mathbb{R}^p}{argmin}\left&space;\{&space;f(x^k)&plus;\triangledown&space;f(x^k)^T(y-x^k)&plus;\frac{1}{2\alpha_k}||y-x^k||^2&space;&plus;&space;g(y)\right&space;\}&space;\end{align*}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\begin{align*}&space;x^{k&plus;1}&space;&=&space;\underset{y\in\mathbb{R}^p}{argmin}\left&space;\{&space;f(x^k)&plus;\triangledown&space;f(x^k)^T(y-x^k)&plus;\frac{1}{2\alpha_k}||y-x^k||^2&space;&plus;&space;g(y)\right&space;\}&space;\end{align*}" title="\begin{align*} x^{k+1} &= \underset{y\in\mathbb{R}^p}{argmin}\left \{ f(x^k)+\triangledown f(x^k)^T(y-x^k)+\frac{1}{2\alpha_k}||y-x^k||^2 + g(y)\right \} \end{align*}" /></a>
+
+Para este caso el problema de optimización es la regla de actualización del método gradiente-proximal:
+
+<a href="http://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;x^{k&plus;1}&space;&=&space;prox_{\alpha&space;kg}(x^k-\alpha_k\triangledown&space;f(x^k))&space;\end{align*}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\begin{align*}&space;x^{k&plus;1}&space;&=&space;prox_{\alpha&space;kg}(x^k-\alpha_k\triangledown&space;f(x^k))&space;\end{align*}" title="\begin{align*} x^{k+1} &= prox_{\alpha kg}(x^k-\alpha_k\triangledown f(x^k)) \end{align*}" /></a>
+
+donde,
+
+<a href="http://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;prox_g(y)&space;&\overset{def}{=}&space;\underset{x}{argmin}\left&space;\{&space;g(x)&plus;\frac{1}{2}||x-y||_2^2&space;\right&space;\}&space;\end{align*}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\begin{align*}&space;prox_g(y)&space;&\overset{def}{=}&space;\underset{x}{argmin}\left&space;\{&space;g(x)&plus;\frac{1}{2}||x-y||_2^2&space;\right&space;\}&space;\end{align*}" title="\begin{align*} prox_g(y) &\overset{def}{=} \underset{x}{argmin}\left \{ g(x)+\frac{1}{2}||x-y||_2^2 \right \} \end{align*}" /></a>
+
+
+
 
 
 
