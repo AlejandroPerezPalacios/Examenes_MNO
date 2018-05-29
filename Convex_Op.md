@@ -71,7 +71,26 @@ donde,
 
 <a href="http://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;prox_g(y)&space;&\overset{def}{=}&space;\underset{x}{argmin}\left&space;\{&space;g(x)&plus;\frac{1}{2}||x-y||_2^2&space;\right&space;\}&space;\end{align*}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\begin{align*}&space;prox_g(y)&space;&\overset{def}{=}&space;\underset{x}{argmin}\left&space;\{&space;g(x)&plus;\frac{1}{2}||x-y||_2^2&space;\right&space;\}&space;\end{align*}" title="\begin{align*} prox_g(y) &\overset{def}{=} \underset{x}{argmin}\left \{ g(x)+\frac{1}{2}||x-y||_2^2 \right \} \end{align*}" /></a>
 
+Para este método también es posible implementar un coeficiente <a href="http://www.codecogs.com/eqnedit.php?latex=\beta_k" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\beta_k" title="\beta_k" /></a> que se refiera al momento.
 
+Además si definimos como restricción que _g(x)_ esté en un conjunto _C_ compacto, podemos resolver el problema de optimización con el método Frank-Wolfe sin el término cuadrático y lograr una tasa de convergencia de <a href="http://www.codecogs.com/eqnedit.php?latex=O(1/\epsilon)" target="_blank"><img src="http://latex.codecogs.com/gif.latex?O(1/\epsilon)" title="O(1/\epsilon)" /></a>.
+
+### Objetivos proximales.
+
+Para muchas aplicaciones no es posible utilizar los métodos vistos previamente de manera directa. Es por esto que definimos nuestro problema de la siguiente forma:
+
+<a href="http://www.codecogs.com/eqnedit.php?latex=\begin{align*}&space;\underset{x,z\in\mathbb{R}^p}{min}\left&space;\{&space;F(x,z):=h(x)&plus;g(z):\Phi&space;z=x&space;\right&space;\}&space;\end{align*}" target="_blank"><img src="http://latex.codecogs.com/gif.latex?\begin{align*}&space;\underset{x,z\in\mathbb{R}^p}{min}\left&space;\{&space;F(x,z):=h(x)&plus;g(z):\Phi&space;z=x&space;\right&space;\}&space;\end{align*}" title="\begin{align*} \underset{x,z\in\mathbb{R}^p}{min}\left \{ F(x,z):=h(x)+g(z):\Phi z=x \right \} \end{align*}" /></a>
+
+Esta forma de ver el problema nos ayuda en el modelado y en los cálculos, primero se puede utilizar para múltiples problemas no suaves y segundo es posible resolverse mediante el algoritmo ADMM (_Alternating Direction Method of Multipliers_) el cual se apalanca de técnicas lagrangiana aumentada y de descomposición dual.
+
+## Escalando para big data vía aleatorización.
+
+Aunque los métodos de primer orden son fácilmente aplicables para cualquier tipo de datos, no necesariamente son los mejores para una gran cantidad de datos y las iteraciones pueden no converger. Es por esto que han surgido diversos algortimos de aleatorización de métodos de primer orden que incrementan el alcance de estos a escalas grandes.
+
+A continuación se resumen algunos de los métodos y su aleatorización:
+
+  + __Métodos de descenso coordinado__: Estos métodos se basan en realizar la actualización del descenso gradiente pero sólo al actualizar modificar una de las entradas del vector por iteración, de tal manera que es escoge la i-ésima entrada, se obtiene el i-ésimo gradiente y con este se actualiza el vector completo x. La desventaja principal de este método es encontrar el mejor índice por el cual realizar el descenso lo cual se convierte en una tarea costosa computacionalmente. Una forma de reducir este trabajo computacional es aleatorizando la selección del índice que actualiza el descenso. Este tipo de métodos se utilizan para problemas de la forma _F(Ax)_ con _A_ una matriz.
+  + __Métodos de gradiente estocástico__: 
 
 
 
