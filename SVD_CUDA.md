@@ -1,3 +1,8 @@
+---
+title: Reporte: Singular Value Decomposition on GPU using CUDA.
+author: Alejandro Daniel Pérez Palacios, 167256
+date: 31/Mayo/2018
+---
 # Reporte: Singular Value Decomposition on GPU using CUDA.
 
 La factorización SVD es una técnica importante utilizada para la factorización de una matriz rectangular. Bajo SVD las
