@@ -2,7 +2,7 @@
 title: Reporte: Convex Optimization for Big Data.
 author: Alejandro Daniel Pérez Palacios, 167256
 date: 31/Mayo/2018
----
+...
 
 # Reporte: Convex Optimization for Big Data.
 
