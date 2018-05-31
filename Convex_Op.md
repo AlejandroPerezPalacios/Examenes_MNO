@@ -1,3 +1,9 @@
+---
+title: Reporte: Convex Optimization for Big Data.
+author: Alejandro Daniel Pérez Palacios, 167256
+date: 31/Mayo/2018
+---
+
 # Reporte: Convex Optimization for Big Data.
 
 El objetivo del artículo es repasar los avances recientes en el campo de optimización convexa para big data, lo cual busca reducir los cuellos de botella computacionales de almacenamiento y comunicación. Los algoritmos están basados en principios simples y alcanzan una aceleración asombrosa incluso para problemas clásicos.
