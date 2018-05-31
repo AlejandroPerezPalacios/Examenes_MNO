@@ -69,8 +69,6 @@ El algortimo descrito en el artículo encuentra los índices <a href="http://www
 
 En cuanto a la implementación de este algoritmo en la GPU se hizo una combinación de calculos en paralelo y secuencial para obtener el resultado final. Primero se copian las diagonales y superdiagonales de la matriz B a la CPU, en esta se realizan las rotaciones de manera secuencial ya que sólo se requiere acceso a las diagonales. Los algortimos para realizar las rotaciones dependen de las filas anteriores y por lo tanto es difícil paralelizarlo, aún asi lo que se paralelizó son los calculos de las operaciones dentro de cada fila resultando en gran deseempeño desde matrices medianas hasta matrices grandes.
 
-bla bla bla del algortimo de diagonalización.
-
 Una vez que se han obtenido las matrices Q,X y P^T, Y^T basta con realizar las multiplicaciones para obtener U=QX y V^T=(PY)^T.
 
 ## Resultados
