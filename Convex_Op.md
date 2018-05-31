@@ -102,3 +102,5 @@ Aunque los métodos de primer orden parecen ajustarse a buenos performance hay d
 
   1. Comunicación: Mala comunicación entre las computadores y entre la memoria local reduce la eficiencia numérica de los métodos de primer orden. Por lo que para evitar esto se puede reducir la comunicación en el algortimo ó generar una copia del vector x(k) en cad máquina y que se llegue a un consenso final entre todas.
   2. Sincronización: Dado que el algoritmo de descenso depende del valor de x(k) para la siguiente iteración es necesario que el algoritmo esté sincronizando correctamente a las máquinas y esto puede causar atrasos. Es por esto que se propone utilizar algoritmos asíncronos.
+  
+Algo muy importante a considerar es que la comunicación y sincorinzación del hardware en el que estemos trabajando definirá el tipo de algoritmo que usemos por lo que se espera que haya algoritmos nuevos que se adapten a las nuevas plataformas computacionales.
